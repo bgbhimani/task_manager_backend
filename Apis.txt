@@ -1,0 +1,42 @@
+POST/api/auth/registerCreates a new user account. Expects username, email, and password in the request body.
+
+POST/api/auth/loginAuthenticates a user with email and password. On success, it returns a token (e.g., JWT) for authorizing subsequent requests.
+
+GET/api/auth/meFetches the profile of the currently logged-in user. This requires a valid authentication token.
+
+POST/api/auth/logoutLogs the user out. This might involve invalidating the session or token on the server.
+
+
+
+POST/api/tasksCreates a new task. The request body should include title, description, dueDate, and priority (e.g., 'low', 'medium', 'high').
+
+GET/api/tasksReads all tasks for the logged-in user. This is the key endpoint for your calendar. You'll use query parameters to filter tasks by a date range. Example: /api/tasks?startDate=2025-08-01&endDate=2025-08-31 would fetch all tasks for August 2025 to display on the calendar.
+
+GET/api/tasks/:taskIdReads a single task by its unique ID. Useful for showing a detailed view of a specific task.PATCH/api/tasks/:taskIdUpdates an existing task. Use this to change a task's title, status (e.g., 'completed'), priority, or due date. The request body contains only the fields that need to be changed.
+
+DELETE/api/tasks/:taskIdDeletes a task by its unique ID.
+
+
+
+POST/api/projectsCreates a new project or list. The body could include a name and maybe a color.
+
+GET/api/projectsReads all projects for the logged-in user.
+
+GET/api/projects/:projectId/tasksReads all tasks within a specific project. This is a key nested route.
+
+PATCH/api/projects/:projectIdUpdates a project's details (e.g., renames it).
+
+DELETE/api/projects/:projectIdDeletes a project. You'll need to decide if this also deletes all the tasks within it.
+
+
+
+
+
+PATCH/api/users/meUpdates the current user's profile. This is for changing non-critical info like their name or profile picture URL.
+
+PATCH/api/users/me/passwordChanges the current user's password. It's good practice to separate this from the general profile update for security.
+
+DELETE/api/users/meDeletes the current user's account. This is a destructive action that should probably require password confirmation.
+
+
+
