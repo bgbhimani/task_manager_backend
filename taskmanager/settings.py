@@ -23,15 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fz^dp+=9xpz+9s=1f@2p*z0sw1=2p^2_tpakh844^vlechur74'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fz^dp+=9xpz+9s=1f@2p*z0sw1=2p^2_tpakh844^vlechur74')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = [
     "task-manager-backend-tqw9.onrender.com",
     "localhost",
     "127.0.0.1",
+    ".onrender.com",  # Allow all Render subdomains
 ]
 
 # Application definition
@@ -172,10 +173,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://task-manager-backend-tqw9.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-# Allow all origins during development (remove in production)
-CORS_ALLOW_ALL_ORIGINS = True
+# Allow all origins during development only
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
